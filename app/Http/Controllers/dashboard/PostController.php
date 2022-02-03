@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
@@ -24,7 +25,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view("dashboard.post.create");
     }
 
     /**
@@ -35,7 +36,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // echo "Hola Mundo: ".$request->input('title');
+        // dd($request);
+
+        $request->validate([
+            'title' => 'required|min:5|max:500',
+            'content' => 'required|min:5'
+        ]);
+        echo "Hola Mundo: ".$request->title;
+
+        Post::create();
     }
 
     /**
