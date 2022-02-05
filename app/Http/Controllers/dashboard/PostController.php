@@ -5,6 +5,7 @@ namespace App\Http\Controllers\dashboard;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePostPost;
 
 class PostController extends Controller
 {
@@ -15,7 +16,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        return 'Hola Mundo desde Post';
+        $posts = Post::orderBy('created_at', 'desc')->paginate(8);
+
+        return view('dashboard.post.index', ['posts' => $posts]);
     }
 
     /**
@@ -25,7 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view("dashboard.post.create");
+        return view('dashboard.post.create', ['post' => new Post() ]);
     }
 
     /**
@@ -34,18 +37,13 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostPost $request)
     {
-        // echo "Hola Mundo: ".$request->input('title');
-        // dd($request);
+        // dd($request->validated());
 
-        $request->validate([
-            'title' => 'required|min:5|max:500',
-            'content' => 'required|min:5'
-        ]);
-        echo "Hola Mundo: ".$request->title;
+        Post::create($request->validated());
 
-        Post::create();
+        return back()->with('status', 'Post creado con exito');
     }
 
     /**
@@ -54,9 +52,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        // $post = Post::findOrFail($id);
+        
+
+        return view('dashboard.post.show', ['post' => $post]);
+        
     }
 
     /**
@@ -65,9 +67,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit(Post $post)
+    {   
+        return view('dashboard.post.edit', ['post' => $post]);
     }
 
     /**
@@ -77,19 +79,22 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StorePostPost $request, Post $post)
     {
-        //
+        $post->update($request->validated());
+
+        return back()->with('status', 'Post actualizado con exito');
     }
 
     /**
-     * Remove the specified resource from storage.
+    //  * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return back()->with('status', 'Post eliminado con exito');
     }
 }
