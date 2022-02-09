@@ -14,6 +14,9 @@
             Titulo
         </td>
         <td>
+            Categoría
+        </td>
+        <td>
             Posteado
         </td>
         <td>
@@ -36,6 +39,9 @@
                 </td>
                 <td>
                     {{ $post->title }}
+                </td>
+                <td>
+                    {{ $post->category->title }}
                 </td>
                 <td>
                     {{ $post->posted }}

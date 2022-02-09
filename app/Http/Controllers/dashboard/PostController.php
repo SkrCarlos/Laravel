@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\dashboard;
 
 use App\Models\Post;
+use App\Models\Category;
+use App\Models\PostImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostPost;
@@ -28,7 +30,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('dashboard.post.create', ['post' => new Post() ]);
+        $categories = Category::pluck('id', 'title');
+        return view('dashboard.post.create', ['post' => new Post(), 'categories' => $categories ]);
     }
 
     /**
@@ -69,9 +72,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {   
-        return view('dashboard.post.edit', ['post' => $post]);
+        $categories = Category::pluck('id', 'title');
+        return view('dashboard.post.edit', ['post' => $post, 'categories' => $categories]);
     }
-
+ 
     /**
      * Update the specified resource in storage.
      *
@@ -85,7 +89,22 @@ class PostController extends Controller
 
         return back()->with('status', 'Post actualizado con exito');
     }
+ 
+    public function image(Request $request, Post $post)
+    {
+        $request->validate([
+            'image' => 'required|mimes:jpeg,bmp,png|max:10240' //10Mb
+        ]);
 
+        $filename = time() . '.' . $request->image->extension();
+
+        $request->image->move(public_path('images'), $filename);
+
+        PostImage::create(['image' => $filename, 'post_id' => $post->id]);
+    
+        return back()->with('status', 'Imagen cargada con exito');
+    }
+ 
     /**
     //  * Remove the specified resource from storage.
      *

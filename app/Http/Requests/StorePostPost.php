@@ -26,6 +26,8 @@ class StorePostPost extends FormRequest
         return [
             'title' => 'required|min:5|max:500',
             'url_clean' => 'required|min:5|max:500',
+            'category_id' => 'required ',
+            'posted' => 'required ',
             'content' => 'required|min:5'
         ];
     }
