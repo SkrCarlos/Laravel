@@ -1,45 +1,23 @@
-<!DOCTYPE html>
+@extends('layouts.app')
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Primera Vista</title>
-</head>
-<body>
-    {{-- <h1>Hola mundo - {!! "Hola mundo $nombre $apellido <script>alert('Hola Mundo')</script>" !!} </h1> --}}
-    <h1>Hola mundo - {{ "Hola mundo $nombre $apellido" }} </h1>
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Dashboard') }}</div>
 
-    <ul>
-
-        {{-- <?php foreach ($posts as $key => $post): ?>
-            <li> {{ $post }} </li>
-        <?php endforeach; ?> --}}
-
-        {{-- @foreach ($posts as $post)
-            <li> {{ $post }} </li>
-        @endforeach --}}
-
-        @forelse ($posts as $post)
-
-            {{-- <?php dd($loop)?> --}}
-
-            <li> 
-                @if ($loop->first)
-                    Primero:
-                @elseif ($loop->last)
-                    Último:
-                @else
-                    Medio: 
-                @endif
-                
-                {{ $post }}
-            </li>
-        @empty 
-            <li>Vacio</li>
-        @endforelse
-
-    </ul>
-
-</body>
-</html>
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    
+                    {{ __('You are logged in!') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

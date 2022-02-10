@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard.master');
+    return view('home');
 })->name('home');
 
 // Route::get('/acerca de', function () {
@@ -43,3 +43,10 @@ Route::resource('dashboard/post', App\Http\Controllers\dashboard\PostController:
 Route::post('dashboard/post/{post}/image', 'App\Http\Controllers\dashboard\PostController@image' )->name('post.image');
 
 Route::resource('dashboard/category', App\Http\Controllers\dashboard\CategoryController::class);
+
+Route::resource('dashboard/user', App\Http\Controllers\dashboard\UserController::class);
+
+
+Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

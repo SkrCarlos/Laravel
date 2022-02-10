@@ -6,18 +6,7 @@
 
 require('./bootstrap');
 
-const ClassicEditor = require( '@ckeditor/ckeditor5-build-classic' );
-
 window.Vue = require('vue').default;
-
-ClassicEditor
-    .create( document.querySelector( '#content' ) )
-    .then( editor => {
-        console.log( editor );
-    } )
-    .catch( error => {
-        console.error( error );
-    } );
 
 /**
  * The following block of code may be used to automatically register your
@@ -30,7 +19,7 @@ ClassicEditor
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

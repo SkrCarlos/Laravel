@@ -16,16 +16,27 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{{ route('category.index') }}">Categorias</a></li>
             <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{ route('user.index') }}">Usuarios</a></li>
+            <li><hr class="dropdown-divider"></li>
           </ul>
         </li>
       </ul>
       <div class="d-flex">
         <ul class="navbar-nav me-2 mb-2 mb-lg-0">
-            <li class="nav-item ">
+            {{-- <li class="nav-item ">
                 <a class="nav-link active" aria-current="page" href="#">Login</a>
-            </li>
+            </li> --}}
             <li class="nav-item ">
-                <a class="nav-link active" aria-current="page" href="#">logout</a>
+
+                <a class="nav-link" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                  document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
             </li>
 
             <li class="nav-item dropdown">
