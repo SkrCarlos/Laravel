@@ -90,7 +90,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
-     */
+     */ 
     public function update(UpdateUserPut $request, User $user)
     {
         $user->update( 
